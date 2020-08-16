@@ -1,0 +1,26 @@
+# 利用するdocker-comnposeのバージョン
+version: '3'
+
+# アプリケーションで動かすための各要素
+services:
+  # サービス名
+  tensolflow_service:
+    # 起動するコンテナの設定
+    build:
+      # ディレクトリの指定
+      context: .
+      # 使用するDockerfileの名前を指定、「Dockerfile」という名前なら省略可能
+      dockerfile: Dockerfile
+    container_name: tensolflow_container
+    # ディレクトリのマウントの設定、:前がホストのディレクトリ、:後がコンテナのディレクトリ
+    volumes:
+      - ./:/usr/src/app
+    working_dir: /usr/src/app
+
+    # ポート設定、:前がホスト側のポート、:あとがコンテナ側のポート
+    ports:
+      - "3000:3000"
+
+    # Tele-TYpewriter、コンテナ起動後に終了させないための設定
+    tty: true
+
