@@ -4,14 +4,14 @@ version: '3'
 # アプリケーションで動かすための各要素
 services:
   # サービス名
-  tensolflow_service:
+  ml_service:
     # 起動するコンテナの設定
     build:
       # ディレクトリの指定
       context: .
       # 使用するDockerfileの名前を指定、「Dockerfile」という名前なら省略可能
       dockerfile: Dockerfile
-    container_name: tensolflow_container
+    container_name: ml_container
     # ディレクトリのマウントの設定、:前がホストのディレクトリ、:後がコンテナのディレクトリ
     volumes:
       - ./:/usr/src/app

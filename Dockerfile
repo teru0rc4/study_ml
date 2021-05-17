@@ -1,20 +1,24 @@
-# tensolflowのdockerイメージを取得
-FROM tensorflow/tensorflow
+# jupyterのdockerイメージを取得
+FROM jupyter/datascience-notebook
 
 # ポート解放
 EXPOSE 3000
 
+USER root
 
 WORKDIR /usr/src/app
 
+COPY . .
+RUN apt-get update \
+    && apt-get install -y python3-pip \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN apt update && apt install -y python3-pip
-RUN pip3 install opencv-python
-RUN pip3 install matplotlib
-RUN pip3 install jupyterlab
+RUN pip3 install pipenv && \
+    pipenv install --system --ignore-pipfile --deploy
+
 # jupyter notebookでjupyterlabを利用するための設定(jupyter notebook5.3以上なら不要)
 RUN jupyter serverextension enable --py jupyterlab --sys-prefix
-
 
 # ENTRYPOINT: コンテナの実行時にデフォルトで実行するコマンドや引数
 ENTRYPOINT ["jupyter-lab", "--ip=0.0.0.0", "--port=3000", "--no-browser", "--allow-root", "--NotebookApp.token=''"]
