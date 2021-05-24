@@ -1,2 +1,5 @@
 .idea/
 *\.iml
+
+# サンプルのcsvを含まないようにする
+src/100_knock_of_data_analysis/*/*.csv
